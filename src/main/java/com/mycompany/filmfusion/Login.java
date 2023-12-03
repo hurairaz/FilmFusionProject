@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.filmfusion;
+import javax.swing.JOptionPane;
+import mongodb.main;
+import mongodb.main.Userdata;
 
 /**
  *
@@ -219,11 +222,23 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      Dashboard DashboardFrame =  new Dashboard();
+       String username = jTextField1.getText();
+      String password = new String(jPasswordField1.getPassword());
+      Userdata userdata = main.getInstance().getuserfromdb(new Userdata(username, password));
+      if( userdata != null )
+      {
+       Dashboard DashboardFrame =  new Dashboard();
       DashboardFrame.setVisible(true);
       DashboardFrame.pack();
       DashboardFrame.setLocationRelativeTo(null); // centre
       this.dispose();
+      }
+      else
+      {
+          JOptionPane.showMessageDialog(this, "Access Denied. Contact DataBase Manager to get Access", "Access Denied", JOptionPane.ERROR_MESSAGE);
+      }
+  
+      
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

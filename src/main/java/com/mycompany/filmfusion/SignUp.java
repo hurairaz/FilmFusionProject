@@ -1,6 +1,9 @@
 
 package com.mycompany.filmfusion;
 
+import mongodb.main;
+import mongodb.main.Userdata;
+
 public class SignUp extends javax.swing.JFrame {
 
     public SignUp() {
@@ -195,7 +198,13 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+      String username = jTextField1.getText();
+      //String email = jTextField2.getText();
+      String password = new String(jPasswordField1.getPassword());
+      Userdata userdata =new Userdata(username , password);
+      main.getInstance().insertuserdataindb(userdata);
+        
+      
       Dashboard DashboardFrame =  new Dashboard();
       DashboardFrame.setVisible(true);
       DashboardFrame.pack();
