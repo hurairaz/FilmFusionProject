@@ -1,7 +1,9 @@
 
 package com.mycompany.filmfusion;
 
+import javax.swing.JOptionPane;
 import mongodb.main;
+import mongodb.main.Admin;
 import mongodb.main.Userdata;
 
 public class SignUp extends javax.swing.JFrame {
@@ -201,15 +203,56 @@ public class SignUp extends javax.swing.JFrame {
       String username = jTextField1.getText();
       //String email = jTextField2.getText();
       String password = new String(jPasswordField1.getPassword());
-      Userdata userdata =new Userdata(username , password);
-      main.getInstance().insertuserdataindb(userdata);
-        
+    
       
-      Dashboard DashboardFrame =  new Dashboard();
+      if (username.toLowerCase().contains("admin")) {
+          String adminrole = "admin";
+            Admin admindataa =new Admin(username , password , adminrole);
+              main.getInstance().insertadmindataindb(admindataa);
+        
+          
+          
+            if( admindataa != null )
+      {
+            Adminp1 adminFrame = new Adminp1();
+            adminFrame.setVisible(true);
+            adminFrame.pack();
+            adminFrame.setLocationRelativeTo(null); // centre
+            this.dispose();
+      }
+      else
+      {
+          JOptionPane.showMessageDialog(this, "Access Denied. Contact DataBase Manager to get Access", "Access Denied", JOptionPane.ERROR_MESSAGE);
+      }
+            
+            
+    }   
+      
+    else
+      {
+          
+          Userdata userdata =new Userdata(username , password);
+          main.getInstance().insertuserdataindb(userdata);
+        
+          if( userdata != null )
+      {
+          
+       Dashboard DashboardFrame =  new Dashboard();
       DashboardFrame.setVisible(true);
       DashboardFrame.pack();
       DashboardFrame.setLocationRelativeTo(null); // centre
       this.dispose();
+      }
+      else
+      {
+          JOptionPane.showMessageDialog(this, "Access Denied. Contact DataBase Manager to get Access", "Access Denied", JOptionPane.ERROR_MESSAGE);
+      }
+      }
+      
+      
+      
+  
+      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

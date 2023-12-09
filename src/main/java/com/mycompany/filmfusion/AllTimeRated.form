@@ -3,9 +3,6 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[800, 500]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -161,7 +158,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="17" green="94" red="f9" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="1.     TITANIC"/>
+            <Property name="text" type="java.lang.String" value="TITANIC"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[150, 70]"/>
@@ -179,7 +176,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="17" green="94" red="f9" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="1.     GOD FATHER"/>
+            <Property name="text" type="java.lang.String" value="GOD FATHER"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[150, 70]"/>
@@ -197,7 +194,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="17" green="94" red="f9" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="1.     SHAWSHANK REDEMPTION"/>
+            <Property name="text" type="java.lang.String" value="SHAWSHANK REDEMPTION"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[150, 70]"/>
@@ -218,7 +215,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="17" green="94" red="f9" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="1.     DJANGO UNCHAINED"/>
+            <Property name="text" type="java.lang.String" value="DJANGO UNCHAINED"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[150, 70]"/>

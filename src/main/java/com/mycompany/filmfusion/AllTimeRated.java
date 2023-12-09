@@ -36,7 +36,6 @@ public class AllTimeRated extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 500));
 
         jPanel1.setBackground(new java.awt.Color(77, 76, 125));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -78,21 +77,21 @@ public class AllTimeRated extends javax.swing.JFrame {
         jButton6.setBackground(new java.awt.Color(77, 76, 125));
         jButton6.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(249, 148, 23));
-        jButton6.setText("1.     TITANIC");
+        jButton6.setText("TITANIC");
         jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton6.setPreferredSize(new java.awt.Dimension(150, 70));
 
         jButton7.setBackground(new java.awt.Color(77, 76, 125));
         jButton7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(249, 148, 23));
-        jButton7.setText("1.     GOD FATHER");
+        jButton7.setText("GOD FATHER");
         jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton7.setPreferredSize(new java.awt.Dimension(150, 70));
 
         jButton8.setBackground(new java.awt.Color(77, 76, 125));
         jButton8.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jButton8.setForeground(new java.awt.Color(249, 148, 23));
-        jButton8.setText("1.     SHAWSHANK REDEMPTION");
+        jButton8.setText("SHAWSHANK REDEMPTION");
         jButton8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton8.setPreferredSize(new java.awt.Dimension(150, 70));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +103,7 @@ public class AllTimeRated extends javax.swing.JFrame {
         jButton9.setBackground(new java.awt.Color(77, 76, 125));
         jButton9.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jButton9.setForeground(new java.awt.Color(249, 148, 23));
-        jButton9.setText("1.     DJANGO UNCHAINED");
+        jButton9.setText("DJANGO UNCHAINED");
         jButton9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton9.setPreferredSize(new java.awt.Dimension(150, 70));
 
@@ -158,6 +157,19 @@ public class AllTimeRated extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void checkAndReplaceTitle(String enteredTitle) {
+        if (enteredTitle.equals(jButton6.getText())) {
+            jButton6.setText("Add Another");
+        } else if (enteredTitle.equals(jButton7.getText())) {
+            jButton7.setText("Add Another");
+        } else if (enteredTitle.equals(jButton8.getText())) {
+            jButton8.setText("Add Another");
+        } else if (enteredTitle.equals(jButton9.getText())) {
+            jButton9.setText("Add Another");
+        }
+    }
+    
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -170,6 +182,12 @@ public class AllTimeRated extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    
+    
+      public void setButtonTitle(String title) {
+        jButton6.setText(title);
+    }
+      
     /**
      * @param args the command line arguments
      */

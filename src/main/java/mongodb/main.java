@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 /**
  *
@@ -51,7 +52,7 @@ public class main {
     public MongoDatabase database;
     
     static main obj = new main();
-    private main()
+    public main()
     {
         start();
     }
@@ -94,17 +95,15 @@ public class main {
     // MongoDatabase defines a connection to a specific MongoDB database
      database = mongoClient.getDatabase(dbName);
     // MongoCollection defines a connection to a specific collection of documents in a specific database
-    MongoCollection<Userdata> collection = database.getCollection(collectionName, Userdata.class);
+    //MongoCollection<Userdata> collection = database.getCollection(collectionName, Userdata.class);
    // MongoCollection<roomreservation> collection2 = database.getCollection(collectionName2, roomreservation.class);
     
    
     }
-    
-     
-     
-     
+
     
     
+   
     
     
     public static class Userdata 
@@ -137,9 +136,9 @@ public class main {
 
     
 
-//   public String getName() {
-//      return name;
-//    }
+   public String getName() {
+      return username;
+    }
 //
 //    public void setName(String name) {
 //      this.name = name;
@@ -171,4 +170,168 @@ public class main {
     // Find the user based on the username
     return collection.find(filter).first();
 }
+   
+    public List<Userdata> getAllUsersFromDb() {
+    MongoCollection<Userdata> collection = database.getCollection("Users", Userdata.class);
+
+    // Find all documents in the collection
+    List<Userdata> allUsers = new ArrayList<>();
+    collection.find().iterator().forEachRemaining(allUsers::add);
+
+    return allUsers;
+}
+    
+    public void deleteUserByUsername(String username) {
+    MongoCollection<Userdata> collection = database.getCollection("Users", Userdata.class);
+
+    // Create a filter to find the user by username
+    Bson filter = Filters.eq("username", username);
+
+    // Delete the user with the specified username
+    DeleteResult result = collection.deleteOne(filter);
+
+   
+}
+   
+   
+   public static class Movie {
+    private int id;
+    private String title;
+    private boolean availability_status;
+    private double rating;
+    private String description;
+
+    // Default constructor
+    public Movie() {
+    }
+
+    // Parameterized constructor
+    public Movie(int id, String title, boolean availability_status, double rating, String description) {
+        this.id = id;
+        this.title = title;
+        this.availability_status = availability_status;
+        this.rating = rating;
+        this.description = description;
+    }
+
+    // Function to update attributes by matching the id number
+    public void updateMovie(int targetId, String newTitle, boolean newAvailabilityStatus,
+                            double newRating, String newDescription) {
+        if (this.id == targetId) {
+            this.title = newTitle;
+           
+            this.availability_status = newAvailabilityStatus;
+            this.rating = newRating;
+            this.description = newDescription;
+            System.out.println("Movie updated successfully.");
+        } else {
+            System.out.println("Movie with ID " + targetId + " not found.");
+        }
+    }
+
+    // Function to display the movie
+    public void displayMovie() {
+        System.out.println("Movie ID: " + id);
+        System.out.println("Title: " + title);
+        System.out.println("Availability Status: " + availability_status);
+        System.out.println("Rating: " + rating);
+        System.out.println("Description: " + description);
+    }
+     public String getTitle() {
+        return title;
+    }
+     
+    
+
+   }
+   
+    public List<Movie> getAllMoviesFromDb() {
+    MongoCollection<Movie> collection = database.getCollection("Movie", Movie.class);
+
+    // Find all documents in the collection
+    List<Movie> allMovies = new ArrayList<>();
+    collection.find().iterator().forEachRemaining(allMovies::add);
+
+    return allMovies;
+}
+    Movie Movies = new Movie();
+     public Movie getInstanceMovie()
+    {
+        return Movies;
+    }
+     
+     
+      public void insertmoviedataindb(Movie data)
+    {
+        MongoCollection<Movie> collection = database.getCollection("Movie", Movie.class);
+        collection.insertOne(data);
+    }
+     
+     
+     public static class Admin extends Userdata {
+    private String adminRole;
+
+    public Admin() {
+        super();
+        adminRole = null;
+    }
+
+    public Admin(String username, String password, String adminRole) {
+        super(username, password);
+        this.adminRole = adminRole;
+    }
+
+    public String getAdminRole() {
+        return adminRole;
+    }
+
+    public void setAdminRole(String adminRole) {
+        this.adminRole = adminRole;
+    }
+
+    public void displayAdminDetails() {
+        System.out.println("Admin Details:");
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+        System.out.println("Admin Role: " + adminRole);
+    }
+    
+     public String getAName() {
+      return username;
+    }
+
+   
+}
+     
+     
+       public Admin getadminfromdb(Userdata data) {
+    MongoCollection<Admin> collection = database.getCollection("Admin", Admin.class);
+    
+    // Assuming Userdata has a field called 'username' that you want to use for the query
+    
+    Bson filter = Filters.and(
+        Filters.eq("username", data.username), Filters.eq("password", data.password));
+
+    // Find the user based on the username
+    return collection.find(filter).first();
+}
+       
+           public void insertadmindataindb(Admin data)
+    {
+        MongoCollection<Admin> collection = database.getCollection("Admin", Admin.class);
+        collection.insertOne(data);
+    }
+
+    public void deleteAdminByUsername(String username) {
+    MongoCollection<Admin> collection = database.getCollection("Admin", Admin.class);
+
+    // Create a filter to find the user by username
+    Bson filter = Filters.eq("username", username);
+
+    // Delete the user with the specified username
+    DeleteResult resul = collection.deleteOne(filter);
+
+   
+}
+     
 }
