@@ -6,6 +6,7 @@ import java.util.Date;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -37,8 +38,13 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -49,6 +55,10 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
  * @author apple
  */
 public class main {
+
+    public static Object getInstanceReview() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     public MongoDatabase database;
     
     static main obj = new main();
@@ -101,6 +111,11 @@ public class main {
    
     }
 
+    public void insertreviewdataindb(Review data) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+   
     
     
    
@@ -333,5 +348,137 @@ public class main {
 
    
 }
+    
+    
+
+    
+    
+     public static class Review {
+   
+    public String title;
+    public String rating;
+         
+    //private Movie mov;     
+    public String rev;
+
+    
+    
+    
+     public Review()
+    {
+        title = null ;
+        rating=null;
+    }
+//    
+   
+
+    // Parameterized constructor
+    public Review(String title,String rating, String rev) {
+       
+        this.title = title;
+      
+        this.rating = rating;
+        this.rev = rev;
+    }
+  
+    // Function to update attributes by matching the id number
+    
      
+    // Function to display the movie
+    public void displayReview() {
+       
+        System.out.println("title: " + title);
+        
+        System.out.println("rating: " + rating);
+        System.out.println("rev: " + rev);
+    }
+     public String getTitle() {
+        return title;
+    }
+     public String getrating() {
+        return rating;
+    }
+      public String getrev() {
+        return rev;
+    }
+
+       
+     }
+   
+     
+    public List<Review> getAllReviewFromDb() {
+    MongoCollection<Review> collection = database.getCollection("Review", Review.class);
+
+    // Find all documents in the collection
+    List<Review> allreview = new ArrayList<>();
+    collection.find().iterator().forEachRemaining(allreview::add);
+
+    return allreview;
+}
+   // Review Review = new Review();
+     public static main getInstanceRevieww()
+    {
+        return obj;
+    }
+     
+     
+      public void insertreviewwdataindb(Review data)
+    {
+        MongoCollection<Review> collection = database.getCollection("Review", Review.class);
+        collection.insertOne(data);
+    }
+      
+      
+     
+     public void displayOrders() {
+        // Assuming you have a collection named "orders_restaurant"
+        MongoCollection<Review> collection3 = database.getCollection("Review", Review.class);
+
+        // Fetch all documents from the collection
+        FindIterable<Review> orders = collection3.find();
+
+        // Prepare data for the table
+        List<Review> data = new ArrayList<>();
+        for (Review order : orders) {
+            data.add(order);
+        }
+
+        // Define column names
+        Vector<String> columnNames = new Vector<>();
+        columnNames.add("Title");
+         columnNames.add("rating");
+        columnNames.add("rev");
+        // Add more columns as needed based on your document structure
+
+        // Create a JTable with the fetched data
+        JTable table = new JTable(buildTableModel(data, columnNames));
+
+        // Optionally, you can embed the JTable in a JScrollPane
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        // Display the table in a JFrame or another suitable container
+        JFrame frame = new JFrame("addreview");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(scrollPane);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    // Helper method to convert the list of restaurantHandler objects into a TableModel
+    private DefaultTableModel buildTableModel(List<Review> data, Vector<String> columnNames) {
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        for (Review order : data) {
+            Vector<Object> row = new Vector<>();
+            row.add(order.getTitle());
+            row.add(order.getrating());
+            row.add(order.getrev());
+            // Add more columns as needed based on your restaurantHandler class
+            model.addRow(row);
+        }
+
+        return model;
+    }
+    
+    
 }
