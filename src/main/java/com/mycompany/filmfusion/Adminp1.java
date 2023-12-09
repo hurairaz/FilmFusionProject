@@ -4,6 +4,8 @@
  */
 package com.mycompany.filmfusion;
 
+import mongodb.main;
+
 /**
  *
  * @author abc
@@ -158,9 +160,7 @@ public class Adminp1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-             Adminp3 pi= new Adminp3();
-            pi.setVisible(true);   
-            dispose();      // TODO add your handling code here:
+            main.getInstanceRevieww().displayOrders();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
