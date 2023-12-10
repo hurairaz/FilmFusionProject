@@ -50,6 +50,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
+
 /**
  *
  * @author apple
@@ -60,7 +61,7 @@ public class main {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     public MongoDatabase database;
-    
+    public static String userlogger ;
     static main obj = new main();
     public main()
     {
@@ -69,6 +70,7 @@ public class main {
     
     public void start() 
     {
+         
         // Start code here, similar to Start() in Unity
         Logger.getLogger( "org.mongodb.driver" ).setLevel(Level.WARNING);
     // TODO:
@@ -162,20 +164,45 @@ public class main {
 //    
   }
     
+    
+    
+       public static class User extends Userdata 
+    {
+          String fav_genre;
+          SavedList saved;
+    
+    public User()
+    {
+        username = null ;
+    }
+    
+    public User(String username, String password) 
+    {
+      this.username = username;
+      this.password = password;
+
+      
+    }
+   public String getName() {
+       userlogger=username;
+      return  username;
+    }
+  }
+    
       public static main getInstance()
     {
         return obj;
     }
-    public void insertuserdataindb(Userdata data)
+    public void insertuserdataindb(User data)
     {
-        MongoCollection<Userdata> collection = database.getCollection("Users", Userdata.class);
+        MongoCollection<User> collection = database.getCollection("Users", User.class);
         collection.insertOne(data);
     }
     
   
 
-   public Userdata getuserfromdb(Userdata data) {
-    MongoCollection<Userdata> collection = database.getCollection("Users", Userdata.class);
+   public User getuserfromdb(User data) {
+    MongoCollection<User> collection = database.getCollection("Users", User.class);
     
     // Assuming Userdata has a field called 'username' that you want to use for the query
     
@@ -186,18 +213,18 @@ public class main {
     return collection.find(filter).first();
 }
    
-    public List<Userdata> getAllUsersFromDb() {
-    MongoCollection<Userdata> collection = database.getCollection("Users", Userdata.class);
+    public List<User> getAllUsersFromDb() {
+    MongoCollection<User> collection = database.getCollection("Users", User.class);
 
     // Find all documents in the collection
-    List<Userdata> allUsers = new ArrayList<>();
+    List<User> allUsers = new ArrayList<>();
     collection.find().iterator().forEachRemaining(allUsers::add);
 
     return allUsers;
 }
     
     public void deleteUserByUsername(String username) {
-    MongoCollection<Userdata> collection = database.getCollection("Users", Userdata.class);
+    MongoCollection<User> collection = database.getCollection("Users", User.class);
 
     // Create a filter to find the user by username
     Bson filter = Filters.eq("username", username);
@@ -207,68 +234,125 @@ public class main {
 
    
 }
-   
+   public String getsingleUserFromDb() {
+    MongoCollection<User> collection = database.getCollection("recent", User.class);
+
+    // Find the first document in the collection
+    User singleUser = collection.find().first();
+
+    return singleUser.getName();
+}
+   public void addSingleValueToRecentCollection(String singleValue) {
+    MongoCollection<Document> collection = database.getCollection("recent");
+
+    // Create a document with a single field and the provided value
+    Document document = new Document("username", singleValue);
+
+    // Insert the document into the collection
+    collection.insertOne(document);
+}
+   public void deleteSingleValueFromRecentCollection() {
+    MongoCollection<Document> collection = database.getCollection("recent");
+
+    // Delete the first document in the collection
+    collection.deleteOne(new Document());
+}
+
    
    public static class Movie {
-    private int id;
-    private String title;
-    private boolean availability_status;
-    private double rating;
-    private String description;
+  
+    public String title;
+    
 
     // Default constructor
     public Movie() {
     }
 
     // Parameterized constructor
-    public Movie(int id, String title, boolean availability_status, double rating, String description) {
-        this.id = id;
+    public Movie(String title) {
+        
         this.title = title;
-        this.availability_status = availability_status;
-        this.rating = rating;
-        this.description = description;
+        
+       
     }
 
     // Function to update attributes by matching the id number
-    public void updateMovie(int targetId, String newTitle, boolean newAvailabilityStatus,
-                            double newRating, String newDescription) {
-        if (this.id == targetId) {
-            this.title = newTitle;
-           
-            this.availability_status = newAvailabilityStatus;
-            this.rating = newRating;
-            this.description = newDescription;
-            System.out.println("Movie updated successfully.");
-        } else {
-            System.out.println("Movie with ID " + targetId + " not found.");
-        }
-    }
+   
 
     // Function to display the movie
     public void displayMovie() {
-        System.out.println("Movie ID: " + id);
+      
         System.out.println("Title: " + title);
-        System.out.println("Availability Status: " + availability_status);
-        System.out.println("Rating: " + rating);
-        System.out.println("Description: " + description);
+        
     }
      public String getTitle() {
         return title;
     }
      
-    
+      
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+   
 
    }
    
     public List<Movie> getAllMoviesFromDb() {
-    MongoCollection<Movie> collection = database.getCollection("Movie", Movie.class);
+        MongoCollection<Document> collection = database.getCollection("Movie");
 
-    // Find all documents in the collection
-    List<Movie> allMovies = new ArrayList<>();
-    collection.find().iterator().forEachRemaining(allMovies::add);
+        List<Movie> allMovies = new ArrayList<>();
+        for (Document doc : collection.find()) {
+            Movie movie = new Movie();
+           
+            movie.setTitle(doc.getString("title"));
+            
+            
+            allMovies.add(movie);
+        }
 
-    return allMovies;
-}
+        return allMovies;
+    }
+    
+    public List<Movie> getAllTimeFromDb() {
+        MongoCollection<Document> collection = database.getCollection("alltimerated");
+
+        List<Movie> allMovies = new ArrayList<>();
+        for (Document doc : collection.find()) {
+            Movie movie = new Movie();
+           
+            movie.setTitle(doc.getString("title"));
+            
+            
+            allMovies.add(movie);
+        }
+
+        return allMovies;
+    }
+    
+     public void removealltimebyname(String movieName) {
+        MongoCollection<Document> collection = database.getCollection("alltimerated");
+
+        // Create a filter to find the document with the specified title
+        Bson filter = Filters.eq("title", movieName);
+
+        // Delete the document that matches the filter
+        DeleteResult result = collection.deleteOne(filter);
+
+        // Check if the document was successfully deleted
+    }
+     
+     public void insertalltimeindb(String data) {
+        MongoCollection<Document> collection = database.getCollection("alltimerated");
+
+        // Create a new document with a "title" field and set it to the provided data
+        Document document = new Document("title", data);
+
+        // Insert the document into the collection
+        collection.insertOne(document);
+    }
+     
     Movie Movies = new Movie();
      public Movie getInstanceMovie()
     {
@@ -479,6 +563,257 @@ public class main {
 
         return model;
     }
+   public static class SavedList {
+    private User user;
+    private List<Movie> movieList;
+    
+
+    public SavedList()
+    {
+  
+    }
+
+    public SavedList(User user, List<Movie> movieList) {
+        this.user = user;
+        this.movieList = movieList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
+    
+    public String getuser()
+    {
+        return user.getName();
+    }
     
     
+    
+} 
+   
+   
+   public static class WishList {
+    private User user;
+    private List<Movie> movieList;
+    
+
+    public WishList()
+    {
+  
+    }
+
+    public WishList(User user, List<Movie> movieList) {
+        this.user = user;
+        this.movieList = movieList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
+    
+    public String getuser()
+    {
+        return user.getName();
+    }
+    
+    
+    
+} 
+   
+   
+   
+ public List<String> getsavedmovieforuser(String userlog) {
+    List<String> movieList = new ArrayList<>();
+
+    // Assuming you have a global or shared instance of the MongoDatabase named 'database'
+    MongoCollection<Document> collection = database.getCollection("Users");
+
+    Document filter = new Document("username", userlog);
+
+    try (MongoCursor<Document> cursor = collection.find(filter).iterator()) {
+        while (cursor.hasNext()) {
+            Document document = cursor.next();
+
+            if (document.containsKey("movie")) {
+                Object movies = document.get("movie");
+                if (movies instanceof java.util.ArrayList) {
+                    java.util.ArrayList movieArray = (java.util.ArrayList) movies;
+                    for (Object movie : movieArray) {
+                        movieList.add(movie.toString());
+                    }
+                }
+            }
+        }
+    }
+
+    return movieList;
+}
+ 
+ public void addtosaved(String username, String newMovie) {
+    // Assuming you have a global or shared instance of the MongoDatabase named 'database'
+    MongoCollection<Document> collection = database.getCollection("Users");
+
+    Document filter = new Document("username", username);
+
+    // Check if the user exists
+    Document userDocument = collection.find(filter).first();
+    if (userDocument != null) {
+        List<String> movieList = userDocument.get("movie", List.class);
+
+        // If the "movie" field is null or not an array, create a new array
+        if (movieList == null) {
+            movieList = new ArrayList<>();
+        }
+
+        // If the list size is less than 5, add the new movie to the next available index
+        if (movieList.size() < 4) {
+            movieList.add(newMovie);
+        } else {
+            // If the list size exceeds 5, remove the first element and add the new movie
+             movieList.set(0, newMovie);
+        }
+
+        // Update the user document with the modified movie list
+        collection.updateOne(filter, new Document("$set", new Document("movie", movieList)));
+    } else {
+        System.out.println("User not found");
+    }
+}
+ 
+ 
+ 
+ public List<String> getwishmovieforuser(String userlog) {
+    List<String> movieList = new ArrayList<>();
+
+    // Assuming you have a global or shared instance of the MongoDatabase named 'database'
+    MongoCollection<Document> collection = database.getCollection("Users");
+
+    Document filter = new Document("username", userlog);
+
+    try (MongoCursor<Document> cursor = collection.find(filter).iterator()) {
+        while (cursor.hasNext()) {
+            Document document = cursor.next();
+
+            if (document.containsKey("wlist")) {
+                Object movies = document.get("wlist");
+                if (movies instanceof java.util.ArrayList) {
+                    java.util.ArrayList movieArray = (java.util.ArrayList) movies;
+                    for (Object movie : movieArray) {
+                        movieList.add(movie.toString());
+                    }
+                }
+            }
+        }
+    }
+
+    return movieList;
+}
+ 
+ public void addtowish(String username, String newMovie) {
+    // Assuming you have a global or shared instance of the MongoDatabase named 'database'
+    MongoCollection<Document> collection = database.getCollection("Users");
+
+    Document filter = new Document("username", username);
+
+    // Check if the user exists
+    Document userDocument = collection.find(filter).first();
+    if (userDocument != null) {
+        List<String> movieList = userDocument.get("wlist", List.class);
+
+        // If the "movie" field is null or not an array, create a new array
+        if (movieList == null) {
+            movieList = new ArrayList<>();
+        }
+
+        // If the list size is less than 5, add the new movie to the next available index
+        if (movieList.size() < 4) {
+            movieList.add(newMovie);
+        } else {
+            // If the list size exceeds 5, remove the first element and add the new movie
+             movieList.set(0, newMovie);
+        }
+
+        // Update the user document with the modified movie list
+        collection.updateOne(filter, new Document("$set", new Document("wlist", movieList)));
+    } else {
+        System.out.println("User not found");
+    }
+}
+ 
+ 
+ public void removeFromlists(String username, String movieToRemove , String key) {
+    // Assuming you have a global or shared instance of the MongoDatabase named 'database'
+    MongoCollection<Document> collection = database.getCollection("Users");
+
+    Document filter = new Document("username", username);
+
+    // Check if the user exists
+    Document userDocument = collection.find(filter).first();
+    if (userDocument != null) {
+        List<String> movieList = userDocument.get(key, List.class);
+
+        // If the "movie" field is null or not an array, do nothing
+        if (movieList != null && !movieList.isEmpty()) {
+            // Remove the first occurrence of the movieToRemove string from the list
+            movieList.remove(movieToRemove);
+
+            // Update the user document with the modified movie list
+            collection.updateOne(filter, new Document("$set", new Document(key, movieList)));
+        } else {
+            System.out.println("Movie list is empty or null");
+        }
+    } else {
+        System.out.println("User not found");
+    }
+}
+ 
+ public int changePassword(String username, String password, String newPassword) {
+    // Assuming you have a global or shared instance of the MongoDatabase named 'database'
+    MongoCollection<Document> collection = database.getCollection("Users");
+
+    Document filter = new Document("username", username)
+            .append("password", password);
+
+    // Check if the user with the specified username and password exists
+    Document userDocument = collection.find(filter).first();
+    if (userDocument != null) {
+        // Update the user document with the new password
+        collection.updateOne(filter, new Document("$set", new Document("password", newPassword)));
+        return 1; // Password successfully changed
+    } else {
+        return 0; // User not found or password doesn't match
+    }
+}
+
+
+
+
+
+
+
+
 }
