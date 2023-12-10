@@ -5,6 +5,7 @@
 package com.mycompany.filmfusion;
 
 import javax.swing.JOptionPane;
+import mongodb.main;
 
 /**
  *
@@ -16,12 +17,14 @@ public class adminp5 extends javax.swing.JFrame {
      * Creates new form adminp5
      */
     
-    
+     private final main mainInstance;
      private AllTimeRated allTimeRatedFrame;
      
     public adminp5() {
         initComponents();
-        allTimeRatedFrame = new AllTimeRated();
+        mainInstance = main.getInstance();
+        mainInstance.start();
+        
     }
 
     /**
@@ -60,7 +63,7 @@ public class adminp5 extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 255));
-        jLabel3.setText("FROM ?? ALL TIME RATED , TRENDING , OR NEW -> WRITE ART , T , OR N");
+        jLabel3.setText("FROM ?? ALL TIME RATED , TRENDING -> WRITE ART , OR T");
 
         jTextField2.setBackground(new java.awt.Color(204, 0, 51));
         jTextField2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -152,10 +155,10 @@ public class adminp5 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String title = jTextField1.getText().trim().toUpperCase();
         String category = jTextField2.getText().trim().toUpperCase();
+        main.getInstance().removealltimebyname(title);
          switch (category) {
         case "ATR" -> {
-            allTimeRatedFrame.checkAndReplaceTitle(title);
-            allTimeRatedFrame.setButtonTitle(title);
+            allTimeRatedFrame = new AllTimeRated();
             allTimeRatedFrame.setVisible(true);
                  // Add other actions for AllTimeRated frame
              }

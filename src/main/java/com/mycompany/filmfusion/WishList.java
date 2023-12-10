@@ -3,18 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.filmfusion;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
+import javax.swing.SwingUtilities;
+import mongodb.main;
 
 /**
  *
  * @author Other
  */
+
+
+
 public class WishList extends javax.swing.JFrame {
 
     /**
      * Creates new form WishList
      */
+    private final main mainInstance;
+     private String[] movieTitles;
     public WishList() {
         initComponents();
+        mainInstance = main.getInstance();
+        mainInstance.start();
+        setMovieTitlesOnButtons();
     }
 
     /**
@@ -160,9 +175,57 @@ public class WishList extends javax.swing.JFrame {
       this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
+   public void setMovieTitlesOnButtons() {
+        String userlogger = mainInstance.getsingleUserFromDb();
+        List<String> movieTitles = mainInstance.getwishmovieforuser(userlogger);
+
+        if (movieTitles != null && !movieTitles.isEmpty()) {
+            setupButtonWithPopupMenu(jButton7, movieTitles, 0);
+            setupButtonWithPopupMenu(jButton6, movieTitles, 1);
+            setupButtonWithPopupMenu(jButton8, movieTitles, 2);
+            setupButtonWithPopupMenu(jButton9, movieTitles, 3);
+        } else {
+            // Handle the case where the list is null or empty
+            // You can set default text or disable buttons, etc.
+        }
+    }
+
+   private void setupButtonWithPopupMenu(JButton button, List<String> movieTitles, int index) {
+    if (index < movieTitles.size()) {
+        button.setText(movieTitles.get(index));
+
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                showPopupMenu(evt, button, movieTitles.get(index));
+            }
+        });
+    }
+}
+
+    private void showPopupMenu(java.awt.event.MouseEvent evt, JButton button, String movieTitle) {
+        if (SwingUtilities.isRightMouseButton(evt)) {
+            JPopupMenu popup = new JPopupMenu();
+            JMenuItem menuItem = new JMenuItem("Delete from Wish List");
+
+            menuItem.addActionListener((java.awt.event.ActionEvent e) -> {
+                mainInstance.removeFromlists(mainInstance.getsingleUserFromDb(), movieTitle ,"wlist");
+                setMovieTitlesOnButtons();
+                String buttonText = button.getText();
+                System.out.println("Button Text: " + buttonText);
+            });
+
+            popup.add(menuItem);
+            popup.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }
     /**
      * @param args the command line arguments
      */
+   
+   
+   
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

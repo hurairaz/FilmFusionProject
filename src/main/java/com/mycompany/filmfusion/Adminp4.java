@@ -204,7 +204,7 @@ public class Adminp4 extends javax.swing.JFrame {
     else
       {
           
-          main.Userdata userdata =new main.Userdata(username , password);
+          main.User userdata =new main.User(username , password);
           main.getInstance().insertuserdataindb(userdata);
         
           if( userdata != null )

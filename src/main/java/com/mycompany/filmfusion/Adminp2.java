@@ -23,7 +23,7 @@ public class Adminp2 extends javax.swing.JFrame {
      
     public Adminp2() {
         initComponents();
-        allTimeRatedFrame = new AllTimeRated();
+        
     }
 
     /**
@@ -66,7 +66,7 @@ public class Adminp2 extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 0, 51));
-        jLabel2.setText("ENTER IN ALLTIME RATED , TRENDING , OR NEW , WRITE ATR , T , OR N");
+        jLabel2.setText("ENTER IN ALLTIME RATED , TRENDING  , WRITE ATR , OR T");
 
         jTextField3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(255, 153, 0));
@@ -101,7 +101,7 @@ public class Adminp2 extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -153,10 +153,11 @@ public class Adminp2 extends javax.swing.JFrame {
            int idint = Integer.parseInt(id);
            boolean bools;
            bools = true;
-           double integerr = 5;
+           int integerr = 5;
            String strin = "Plott" ;
-           Movie movie =new Movie(idint , title , bools ,integerr , strin);
+           Movie movie =new Movie( title );
            main.getInstance().insertmoviedataindb(movie);
+           
            
            
          
@@ -168,6 +169,8 @@ public class Adminp2 extends javax.swing.JFrame {
     // Take action based on the entered category
     switch (category) {
         case "ATR" -> {
+            main.getInstance().insertalltimeindb(title);
+            allTimeRatedFrame = new AllTimeRated();
             allTimeRatedFrame.setButtonTitle(title);
             allTimeRatedFrame.setVisible(true);
                  // Add other actions for AllTimeRated frame

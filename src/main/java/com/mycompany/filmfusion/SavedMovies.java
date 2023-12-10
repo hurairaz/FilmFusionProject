@@ -4,6 +4,9 @@
  */
 package com.mycompany.filmfusion;
 
+import java.util.List;
+import mongodb.main;
+
 /**
  *
  * @author Other
@@ -13,8 +16,13 @@ public class SavedMovies extends javax.swing.JFrame {
     /**
      * Creates new form SavedMovies
      */
+     private final main mainInstance;
+     private String[] movieTitles;
     public SavedMovies() {
         initComponents();
+        mainInstance = main.getInstance();
+        mainInstance.start();
+        setMovieTitlesOnButtons();
     }
 
     /**
@@ -36,7 +44,6 @@ public class SavedMovies extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 500));
 
         jPanel1.setBackground(new java.awt.Color(77, 76, 125));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -163,6 +170,23 @@ public class SavedMovies extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+   public void setMovieTitlesOnButtons() {
+      String userlogger = mainInstance.getsingleUserFromDb();
+    List<String> movieTitles = mainInstance.getsavedmovieforuser(userlogger);
+    
+    if (movieTitles != null && !movieTitles.isEmpty()) {
+        jButton6.setText(movieTitles.size() > 0 ? movieTitles.get(0) : "");
+        jButton2.setText(movieTitles.size() > 1 ? movieTitles.get(1) : "");
+        jButton5.setText(movieTitles.size() > 2 ? movieTitles.get(2) : "");
+        jButton7.setText(movieTitles.size() > 3 ? movieTitles.get(3) : "");
+    } else {
+        // Handle the case where the list is null or empty
+        // You can set default text or disable buttons, etc.
+    }
+}
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

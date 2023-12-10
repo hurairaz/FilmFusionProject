@@ -4,6 +4,9 @@
  */
 package com.mycompany.filmfusion;
 
+import java.util.List;
+import mongodb.main;
+
 /**
  *
  * @author Other
@@ -13,8 +16,12 @@ public class AllTimeRated extends javax.swing.JFrame {
     /**
      * Creates new form AllTimeRated
      */
+    private final main mainInstance;
     public AllTimeRated() {
         initComponents();
+        mainInstance = main.getInstance();
+        mainInstance.start();
+        makeTitle();
     }
 
     /**
@@ -80,6 +87,11 @@ public class AllTimeRated extends javax.swing.JFrame {
         jButton6.setText("TITANIC");
         jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton6.setPreferredSize(new java.awt.Dimension(150, 70));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(77, 76, 125));
         jButton7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
@@ -87,6 +99,11 @@ public class AllTimeRated extends javax.swing.JFrame {
         jButton7.setText("GOD FATHER");
         jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton7.setPreferredSize(new java.awt.Dimension(150, 70));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(77, 76, 125));
         jButton8.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
@@ -106,6 +123,11 @@ public class AllTimeRated extends javax.swing.JFrame {
         jButton9.setText("DJANGO UNCHAINED");
         jButton9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton9.setPreferredSize(new java.awt.Dimension(150, 70));
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,6 +178,7 @@ public class AllTimeRated extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+       
 
     
     public void checkAndReplaceTitle(String enteredTitle) {
@@ -170,8 +193,25 @@ public class AllTimeRated extends javax.swing.JFrame {
         }
     }
     
+    public void makeTitle() {
+    List<main.Movie> allMovies = mainInstance.getAllTimeFromDb();
+
+    if (!allMovies.isEmpty()) {
+        // Assuming jButton6, jButton7, jButton8, jButton9 are class variables
+        jButton6.setText(allMovies.size() > 0 ? allMovies.get(0).getTitle() : "");
+        jButton7.setText(allMovies.size() > 1 ? allMovies.get(1).getTitle() : "");
+        jButton8.setText(allMovies.size() > 2 ? allMovies.get(2).getTitle() : "");
+        jButton9.setText(allMovies.size() > 3 ? allMovies.get(3).getTitle() : "");
+    }
+}
+
+    
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        movieplayy mplay = new movieplayy();
+            mplay.setVisible(true);
+            mplay.pack();
+            mplay.setLocationRelativeTo(null); // centre
+            this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -181,6 +221,26 @@ public class AllTimeRated extends javax.swing.JFrame {
         DashboardFrame.setLocationRelativeTo(null); // centre
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+          movieplayy mplay = new movieplayy();
+            mplay.setVisible(true);
+            mplay.pack();
+            mplay.setLocationRelativeTo(null); // centre
+            this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        movieplayy mplay = new movieplayy();
+            mplay.setVisible(true);
+            mplay.pack();
+            mplay.setLocationRelativeTo(null); // centre
+            this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     
     
