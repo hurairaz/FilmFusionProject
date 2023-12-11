@@ -4,6 +4,9 @@
  */
 package com.mycompany.filmfusion;
 
+import javax.swing.JOptionPane;
+import mongodb.main;
+
 /**
  *
  * @author Other
@@ -136,6 +139,11 @@ public class Dashboard extends javax.swing.JFrame {
         jButton5.setForeground(new java.awt.Color(54, 48, 98));
         jButton5.setText("Search");
         jButton5.setPreferredSize(new java.awt.Dimension(75, 22));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(255, 208, 153));
         jButton7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
@@ -301,6 +309,25 @@ public class Dashboard extends javax.swing.JFrame {
          md.setLocationRelativeTo(null); // centre
          this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+      String mov = jTextField1.getText();    
+          
+          main.Movie movie = main.getInstance().getmoviesearchfromdb(new main.Movie(mov));
+          if( movie != null )
+      {
+        JOptionPane.showMessageDialog(this,"MOVIE FOUND ");
+       moviedisplay moviedisplayFrame =  new moviedisplay();
+      moviedisplayFrame.setVisible(true);
+      moviedisplayFrame.pack();
+      moviedisplayFrame.setLocationRelativeTo(null); // centre
+      this.dispose();
+      }
+           else
+      {
+          JOptionPane.showMessageDialog(this, "MOVIE NOT FOUND IN DATABASE KINDLY CONTACT ADMINISTRATOR TO ADD MOVIE");
+      }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

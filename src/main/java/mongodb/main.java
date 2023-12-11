@@ -314,7 +314,16 @@ public class main {
 
         return allMovies;
     }
+       public Movie getmoviesearchfromdb(Movie data) {
+    MongoCollection<Movie> collection = database.getCollection("Movie", Movie.class);
     
+    // Assuming Userdata has a field called 'username' that you want to use for the query
+    
+    Bson filter = Filters.and(Filters.eq("title", data.title));
+
+    // Find the user based on the username
+    return collection.find(filter).first();
+}
     public List<Movie> getAllTimeFromDb() {
         MongoCollection<Document> collection = database.getCollection("alltimerated");
 

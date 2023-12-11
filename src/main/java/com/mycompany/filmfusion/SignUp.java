@@ -238,10 +238,10 @@ public class SignUp extends javax.swing.JFrame {
           if( userdata != null )
       {
           
-       Dashboard DashboardFrame =  new Dashboard();
-      DashboardFrame.setVisible(true);
-      DashboardFrame.pack();
-      DashboardFrame.setLocationRelativeTo(null); // centre
+       payment paymentFrame =  new payment();
+      paymentFrame.setVisible(true);
+      paymentFrame.pack();
+      paymentFrame.setLocationRelativeTo(null); // centre
       this.dispose();
       }
       else
