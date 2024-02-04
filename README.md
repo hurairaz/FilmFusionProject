@@ -1,1 +1,1 @@
-# FilmFusionProject Check Master File for the resources and codes
+# FilmFusionProject Code & Resource Files in Master Branch
